@@ -1,14 +1,18 @@
-# Données locales
-data/
+# Data
+data/isos/
+data/*.sqlite
+data/*.db
 
 # Python
 __pycache__/
 *.py[cod]
 *.pyo
 .env
-.venv/
 venv/
+.venv/
 
-# OS
+# macOS
 .DS_Store
-Thumbs.db
+
+# Docker
+*.log

@@ -1,13 +1,13 @@
 services:
-  iso-manager:
-    build: .
-    container_name: iso-manager
+  isostack:
+    image: kloudyman/isostack:latest
+    container_name: isostack
     restart: unless-stopped
     ports:
       - "8585:8000"
     volumes:
       - ./data/isos:/data/isos
-      - iso-manager-db:/data
+      - isostack-db:/data
     environment:
       - BASE_URL=http://localhost:8585
       - MAX_CONCURRENT_DOWNLOADS=3
@@ -15,4 +15,4 @@ services:
       - DB_PATH=/data/db.sqlite
 
 volumes:
-  iso-manager-db:
+  isostack-db:
