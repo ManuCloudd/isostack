@@ -4,6 +4,27 @@ Self-hosted web application to centralize, catalog and serve ISO files on a loca
 
 ![Docker Image](https://img.shields.io/docker/v/kloudyman/isostack?label=Docker%20Hub&logo=docker)
 
+## Screenshots
+
+![Dashboard](docs/screenshot-dashboard.png)
+
+<details>
+<summary>More screenshots</summary>
+
+**ISO detail panel**
+![ISO detail](docs/screenshot-iso-detail.png)
+
+**Add from URL**
+![Add from URL](docs/screenshot-add-url.png)
+
+**Upload a file**
+![Upload](docs/screenshot-add-upload.png)
+
+**Library statistics**
+![Stats](docs/screenshot-stats.png)
+
+</details>
+
 ## Features
 
 - Catalog ISO files with metadata (OS, version, architecture, tags)
