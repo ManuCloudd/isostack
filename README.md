@@ -154,6 +154,18 @@ GET    /files/{filename}            Direct file access (Range requests supported
 
 `.iso` `.img` `.vmdk` `.vdi` `.qcow2` `.raw` `.vhd` `.vhdx` `.ova` `.ovf` `.tar` `.gz` `.xz` `.zst`
 
+## Roadmap
+
+- [ ] English translation / i18n support
+- [ ] Dark / light theme toggle
+- [ ] Torrent download support
+- [ ] Bulk import from storage
+- [ ] Scheduled update checks
+- [ ] Webhook notifications (download complete, update available)
+- [ ] User management (multi-user with roles)
+- [ ] S3 / remote storage backend support
+- [ ] Mobile-friendly UI improvements
+
 ## License
 
 MIT
