@@ -47,9 +47,9 @@ app = FastAPI(title="IsoStack", lifespan=lifespan)
 app.add_middleware(BasicAuthMiddleware, username=AUTH_USERNAME, password=AUTH_PASSWORD)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_origins=[BASE_URL],
+    allow_methods=["GET", "POST", "PUT", "DELETE"],
+    allow_headers=["Authorization", "Content-Type"],
 )
 
 app.include_router(isos.router)
@@ -77,7 +77,12 @@ async def index(request: Request):
 
 @app.get("/files/{filename}")
 async def serve_file(filename: str, request: Request):
-    file_path = os.path.join(ISO_STORAGE_PATH, filename)
+    safe_name = os.path.basename(filename)
+    file_path = os.path.realpath(os.path.join(ISO_STORAGE_PATH, safe_name))
+    storage_root = os.path.realpath(ISO_STORAGE_PATH)
+    if not file_path.startswith(storage_root + os.sep) and file_path != storage_root:
+        from fastapi.responses import JSONResponse
+        return JSONResponse(status_code=400, content={"detail": "Invalid filename"})
     if not os.path.exists(file_path):
         from fastapi.responses import JSONResponse
         return JSONResponse(status_code=404, content={"detail": "File not found"})
@@ -129,6 +134,6 @@ async def serve_file(filename: str, request: Request):
         headers={
             "Content-Length": str(file_size),
             "Accept-Ranges": "bytes",
-            "Content-Disposition": f'attachment; filename="{filename}"',
+            "Content-Disposition": f'attachment; filename="{safe_name}"',
         },
     )

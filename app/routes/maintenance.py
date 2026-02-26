@@ -38,8 +38,6 @@ def system_info(db: Session = Depends(get_db)):
         disk_quota_exceeded = disk["pct"] >= MAX_DISK_USAGE_PCT
 
     return {
-        "iso_storage_path": ISO_STORAGE_PATH,
-        "db_path": DB_PATH,
         "db_size_bytes": db_size,
         "iso_count": iso_count,
         "disk": disk,

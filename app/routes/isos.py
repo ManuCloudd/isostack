@@ -30,7 +30,8 @@ def _format_size(size_bytes: int) -> str:
 
 
 def _filename_from_url(url: str) -> str:
-    return url.split("?")[0].split("/")[-1] or "download.iso"
+    raw = url.split("?")[0].split("/")[-1] or "download.iso"
+    return _safe_filename(raw)
 
 
 def _check_disk_quota():
@@ -53,7 +54,13 @@ def _check_disk_quota():
         pass  # Ne pas bloquer si disk_usage échoue
 
 
+def _safe_filename(filename: str) -> str:
+    """Extrait uniquement le nom de fichier, sans chemin."""
+    return os.path.basename(filename) or "upload.iso"
+
+
 def _unique_filename(filename: str) -> str:
+    filename = _safe_filename(filename)
     base, ext = os.path.splitext(filename)
     path = os.path.join(ISO_STORAGE_PATH, filename)
     counter = 1
@@ -263,8 +270,10 @@ def delete_iso(iso_id: int, db: Session = Depends(get_db)):
     if not iso:
         raise HTTPException(status_code=404, detail="ISO not found")
 
-    file_path = os.path.join(ISO_STORAGE_PATH, iso.filename)
-    if os.path.exists(file_path):
+    safe_name = os.path.basename(iso.filename)
+    file_path = os.path.realpath(os.path.join(ISO_STORAGE_PATH, safe_name))
+    storage_root = os.path.realpath(ISO_STORAGE_PATH)
+    if file_path.startswith(storage_root + os.sep) and os.path.exists(file_path):
         os.remove(file_path)
 
     db.delete(iso)
@@ -395,11 +404,14 @@ async def check_iso_update(iso_id: int, db: Session = Depends(get_db)):
 @router.post("/isos/import")
 async def import_from_storage(payload: dict, background_tasks: BackgroundTasks, db: Session = Depends(get_db)):
     """Import an existing file from storage into the DB."""
-    filename = payload.get("filename")
+    filename = os.path.basename(payload.get("filename") or "")
     if not filename:
         raise HTTPException(status_code=400, detail="filename required")
 
-    file_path = os.path.join(ISO_STORAGE_PATH, filename)
+    file_path = os.path.realpath(os.path.join(ISO_STORAGE_PATH, filename))
+    storage_root = os.path.realpath(ISO_STORAGE_PATH)
+    if not file_path.startswith(storage_root + os.sep):
+        raise HTTPException(status_code=400, detail="Invalid filename")
     if not os.path.exists(file_path):
         raise HTTPException(status_code=404, detail="File not found in storage")
 

@@ -1,12 +1,38 @@
+import ipaddress
 import os
+import socket
 import time
 from datetime import datetime
+from urllib.parse import urlparse
 
 import httpx
 from sqlalchemy.orm import Session
 
 from app.config import ISO_STORAGE_PATH, BASE_URL
 from app.services.hash_service import compute_sha256, verify_checksum
+
+_PRIVATE_NETWORKS = [
+    ipaddress.ip_network("10.0.0.0/8"),
+    ipaddress.ip_network("172.16.0.0/12"),
+    ipaddress.ip_network("192.168.0.0/16"),
+    ipaddress.ip_network("127.0.0.0/8"),
+    ipaddress.ip_network("169.254.0.0/16"),
+    ipaddress.ip_network("::1/128"),
+    ipaddress.ip_network("fc00::/7"),
+]
+
+
+def _validate_url(url: str) -> None:
+    parsed = urlparse(url)
+    if parsed.scheme not in ("http", "https"):
+        raise ValueError("Seuls les schémas http et https sont autorisés")
+    host = parsed.hostname or ""
+    try:
+        ip = ipaddress.ip_address(socket.gethostbyname(host))
+        if any(ip in net for net in _PRIVATE_NETWORKS):
+            raise ValueError("Les adresses IP privées/locales ne sont pas autorisées")
+    except (socket.gaierror, ValueError):
+        raise
 
 
 async def download_iso(iso_id: int, url: str, filename: str, expected_checksum: str, checksum_type: str, db: Session):
@@ -15,7 +41,9 @@ async def download_iso(iso_id: int, url: str, filename: str, expected_checksum: 
     dest_path = os.path.join(ISO_STORAGE_PATH, filename)
 
     try:
-        async with httpx.AsyncClient(follow_redirects=True, timeout=None) as client:
+        _validate_url(url)
+        timeout = httpx.Timeout(connect=10.0, read=3600.0, write=None, pool=5.0)
+        async with httpx.AsyncClient(follow_redirects=True, timeout=timeout) as client:
             async with client.stream("GET", url) as response:
                 response.raise_for_status()
                 total = int(response.headers.get("content-length", 0))
