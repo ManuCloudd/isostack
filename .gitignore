@@ -1,0 +1,14 @@
+# Données locales
+data/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.env
+.venv/
+venv/
+
+# OS
+.DS_Store
+Thumbs.db

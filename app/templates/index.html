@@ -1,0 +1,810 @@
+{% extends "base.html" %}
+{% block title %}IsoStack{% endblock %}
+
+{% block body %}
+
+<!-- SVG sprite (inline, no CDN) -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="ic-disc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/>
+  </symbol>
+  <!-- Tux penguin -->
+  <symbol id="ic-linux" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 2C10 2 8.5 3.5 8.5 6c0 1 .3 2 .8 2.8C8 10 7 11.5 7 13.5c0 .8.1 1.5.4 2.2C6.6 16.4 6 17.4 6 18.5c0 1.5 1.2 2.5 3 2.8V22h6v-.7c1.8-.3 3-1.3 3-2.8 0-1.1-.6-2.1-1.4-2.8.3-.7.4-1.4.4-2.2 0-2-1-3.5-2.3-4.7.5-.8.8-1.8.8-2.8C15.5 3.5 14 2 12 2zm0 2c1.1 0 1.5 1 1.5 2s-.4 2-1.5 2-1.5-1-1.5-2 .4-2 1.5-2zm-1 5.5c.3 0 .5.2.5.5s-.2.5-.5.5-.5-.2-.5-.5.2-.5.5-.5zm2 0c.3 0 .5.2.5.5s-.2.5-.5.5-.5-.2-.5-.5.2-.5.5-.5zm-1 2c1.7 0 3 1.5 3 3.5 0 .6-.1 1.2-.4 1.7-.6-.3-1.3-.5-2.1-.5h-1c-.8 0-1.5.2-2.1.5-.3-.5-.4-1.1-.4-1.7 0-2 1.3-3.5 3-3.5zm-.5 4c-.8 0-1.5.3-2 .7.4.5 1.2.8 2 .8h1c.8 0 1.6-.3 2-.8-.5-.4-1.2-.7-2-.7h-1z"/>
+  </symbol>
+  <!-- Windows flag -->
+  <symbol id="ic-windows" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M3 5.6L10.5 4.5v7H3zM11.5 4.3L21 3v8.5h-9.5zM3 12.5h7.5v7L3 18.4zM11.5 12.5H21V21l-9.5-1.3z"/>
+  </symbol>
+  <!-- BSD daemon -->
+  <symbol id="ic-bsd" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 3c-1 0-2 .5-2.5 1.5L4 7c0 1 .5 2 1 2.5L4 11c-.5 1 0 2.5 1 3l1 3c.5 1 1.5 1.5 2.5 1.5h7c1 0 2-.5 2.5-1.5l1-3c1-.5 1.5-2 1-3l-1-1.5c.5-.5 1-1.5 1-2.5L18.5 4.5C18 3.5 17 3 16 3H8z"/>
+    <path d="M9 9h.01M15 9h.01"/><path d="M9.5 14c.8.8 5 .8 5 0"/>
+    <path d="M7 3.5L5 1M17 3.5L19 1"/>
+  </symbol>
+  <!-- NAS/Server -->
+  <symbol id="ic-server" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/>
+    <line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/>
+    <line x1="10" y1="6" x2="10.01" y2="6"/>
+  </symbol>
+  <!-- Tools -->
+  <symbol id="ic-tool" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>
+  </symbol>
+  <symbol id="ic-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+    <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+  </symbol>
+  <symbol id="ic-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+    <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
+  </symbol>
+  <symbol id="ic-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+    <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
+  </symbol>
+  <symbol id="ic-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+  </symbol>
+  <symbol id="ic-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+  </symbol>
+  <symbol id="ic-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+  </symbol>
+  <symbol id="ic-edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
+  </symbol>
+  <symbol id="ic-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/>
+  </symbol>
+  <symbol id="ic-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+  </symbol>
+  <symbol id="ic-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/>
+  </symbol>
+  <symbol id="ic-upload" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0018 9h-1.26A8 8 0 103 16.3"/>
+  </symbol>
+  <symbol id="ic-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>
+  </symbol>
+  <symbol id="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+    <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+  </symbol>
+  <symbol id="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="20 6 9 17 4 12"/>
+  </symbol>
+  <symbol id="ic-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+  </symbol>
+  <symbol id="ic-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/>
+  </symbol>
+  <symbol id="ic-import" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 3v12"/><path d="M8 11l4 4 4-4"/><path d="M20 21H4"/>
+  </symbol>
+  <symbol id="ic-layers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+    <polyline points="2 17 12 22 22 17"/>
+    <polyline points="2 12 12 17 22 12"/>
+  </symbol>
+  <symbol id="ic-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+  </symbol>
+  <symbol id="ic-star-filled" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+  </symbol>
+  <symbol id="ic-check-sq" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+  </symbol>
+  <symbol id="ic-bar-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/>
+  </symbol>
+  <symbol id="ic-x-sq" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/>
+  </symbol>
+</svg>
+
+<!-- ── HEADER ── -->
+<header>
+  <a href="/" class="logo" style="text-decoration:none">
+    <div class="logo-mark">
+      <img src="/static/img/logo-hdd.png" alt="IsoStack" class="logo-hdd">
+    </div>
+    <div class="logo-text">
+      <span class="logo-name">IsoStack</span>
+      <span class="logo-drop-hint" id="dropHint">
+        <svg width="11" height="11"><use href="#ic-disc"/></svg>
+        Glisser une ISO pour l'ajouter
+      </span>
+    </div>
+  </a>
+  <div class="header-chips">
+    <div class="chip">
+      <span class="chip-val" id="statCount">0</span>
+      <span class="chip-label">ISOs</span>
+    </div>
+    <div class="chip">
+      <span class="chip-val" id="statDisk">0 B</span>
+      <span class="chip-label">Stockage</span>
+    </div>
+    <div class="chip chip-path" id="chipStoragePath" title="Chemin de stockage des ISOs">
+      <svg width="11" height="11" style="flex-shrink:0"><use href="#ic-folder"/></svg>
+      <span class="chip-val chip-path-val" id="statStoragePath">/data/isos</span>
+    </div>
+  </div>
+  <div class="header-actions">
+    <button class="btn btn-secondary" id="btnStats" title="Statistiques">
+      <svg width="14" height="14"><use href="#ic-bar-chart"/></svg>
+      <span class="btn-label">Stats</span>
+    </button>
+    <button class="btn btn-secondary" id="btnMaintenance" title="Maintenance SQL">
+      <svg width="14" height="14"><use href="#ic-tool"/></svg>
+      <span class="btn-label">Maintenance</span>
+    </button>
+    <button class="btn btn-secondary" id="btnBrowse">
+      <svg width="14" height="14"><use href="#ic-folder"/></svg>
+      <span class="btn-label">Parcourir le stockage</span>
+      <span class="spinner"></span>
+    </button>
+    <button class="btn btn-primary" id="btnAdd">
+      <svg width="14" height="14"><use href="#ic-plus"/></svg>
+      <span class="btn-label">Ajouter une ISO</span>
+      <span class="spinner"></span>
+    </button>
+  </div>
+</header>
+
+<!-- ── TOOLBAR ── -->
+<div class="toolbar">
+  <div class="search-wrap">
+    <svg width="14" height="14"><use href="#ic-search"/></svg>
+    <input type="text" id="filterSearch" placeholder="Rechercher une ISO…">
+  </div>
+  <div class="toolbar-filters">
+    <select id="filterCategory">
+      <option value="">Catégorie</option>
+      <option value="linux">Linux</option>
+      <option value="windows">Windows</option>
+      <option value="tools">Tools</option>
+      <option value="other">Other</option>
+    </select>
+    <select id="filterOS">
+      <option value="">OS</option>
+      <option value="ubuntu">Ubuntu</option>
+      <option value="debian">Debian</option>
+      <option value="fedora">Fedora</option>
+      <option value="centos">CentOS</option>
+      <option value="arch">Arch</option>
+      <option value="kali">Kali</option>
+      <option value="windows">Windows</option>
+      <option value="proxmox">Proxmox</option>
+      <option value="truenas">TrueNAS</option>
+    </select>
+    <select id="filterArch">
+      <option value="">Archi</option>
+      <option value="x86_64">x86_64</option>
+      <option value="arm64">arm64</option>
+      <option value="x86">x86</option>
+    </select>
+    <select id="filterEdition">
+      <option value="">Édition</option>
+      <option value="desktop">Desktop</option>
+      <option value="server">Server</option>
+      <option value="cli">CLI / Minimal</option>
+      <option value="live">Live</option>
+      <option value="core">Core</option>
+      <option value="workstation">Workstation</option>
+      <option value="netinstall">Net Install</option>
+    </select>
+  </div>
+  <button class="btn-fav-filter" id="btnFavFilter" title="Favoris uniquement" onclick="toggleFavFilter()">
+    <svg width="13" height="13"><use href="#ic-star"/></svg>
+    Favoris
+  </button>
+  <div class="sep"></div>
+  <select id="sortSelect" title="Trier par">
+    <option value="date_desc">↓ Date</option>
+    <option value="date_asc">↑ Date</option>
+    <option value="name_asc">A → Z</option>
+    <option value="name_desc">Z → A</option>
+    <option value="size_desc">↓ Taille</option>
+    <option value="size_asc">↑ Taille</option>
+    <option value="status">Statut</option>
+  </select>
+  <div class="sep"></div>
+  <div class="view-btns">
+    <button class="view-btn active" id="btnGrid" title="Vue grille">
+      <svg width="14" height="14"><use href="#ic-grid"/></svg>
+    </button>
+    <button class="view-btn" id="btnList" title="Vue liste">
+      <svg width="14" height="14"><use href="#ic-list"/></svg>
+    </button>
+    <button class="view-btn" id="btnGroup" title="Grouper par OS">
+      <svg width="14" height="14"><use href="#ic-layers"/></svg>
+    </button>
+    <button class="view-btn" id="btnSelect" title="Sélection multiple">
+      <svg width="14" height="14"><use href="#ic-check-sq"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- ── BARRE SÉLECTION MULTIPLE ── -->
+<div class="sel-bar hidden" id="selBar">
+  <div class="sel-bar-left">
+    <button class="sel-bar-btn" id="selBarAll" onclick="selectAll()">Tout sélectionner</button>
+    <button class="sel-bar-btn" id="selBarNone" onclick="selectNone()">Désélectionner</button>
+    <span class="sel-bar-count" id="selBarCount">0 sélectionné(s)</span>
+  </div>
+  <div class="sel-bar-right">
+    <button class="sel-bar-btn accent" id="selBtnHash" onclick="bulkVerify()" title="Calculer hash pour la sélection">
+      <svg width="13" height="13"><use href="#ic-shield"/></svg> Hash
+    </button>
+    <button class="sel-bar-btn accent" id="selBtnCopy" onclick="bulkCopyURLs()" title="Copier toutes les URLs">
+      <svg width="13" height="13"><use href="#ic-copy"/></svg> Copier URLs
+    </button>
+    <button class="sel-bar-btn accent" id="selBtnExport" onclick="bulkExport()" title="Exporter liste">
+      <svg width="13" height="13"><use href="#ic-download"/></svg> Exporter
+    </button>
+    <button class="sel-bar-btn danger" id="selBtnDelete" onclick="bulkDelete()" title="Supprimer la sélection">
+      <svg width="13" height="13"><use href="#ic-trash"/></svg> Supprimer
+    </button>
+    <button class="sel-bar-close" onclick="exitSelectMode()">
+      <svg width="14" height="14"><use href="#ic-x"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- ── CONTENT ── -->
+<main>
+  <div id="isoContainer"></div>
+  <div class="pagination-bar">
+    <div id="pagination" class="pagination"></div>
+    <div class="per-page-wrap">
+      <span>Par page</span>
+      <select id="perPageSelect">
+        <option value="12">12</option>
+        <option value="24" selected>24</option>
+        <option value="48">48</option>
+        <option value="100">100</option>
+      </select>
+    </div>
+  </div>
+</main>
+
+<div id="toastContainer" class="toast-container"></div>
+
+<div class="app-version">v0.9-beta</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     MODAL — AJOUTER UNE ISO
+══════════════════════════════════════════════════════════ -->
+<div class="modal-overlay hidden" id="modalAdd">
+  <div class="modal">
+    <div class="modal-head">
+      <h2>Ajouter une ISO</h2>
+      <button class="btn-close" onclick="closeModal('modalAdd')">
+        <svg width="14" height="14"><use href="#ic-x"/></svg>
+      </button>
+    </div>
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="url">
+        <svg width="13" height="13"><use href="#ic-link"/></svg> Depuis une URL
+      </button>
+      <button class="tab-btn" data-tab="upload">
+        <svg width="13" height="13"><use href="#ic-upload"/></svg> Uploader
+      </button>
+    </div>
+
+    <!-- Tab URL -->
+    <div class="tab-panel active" id="tab-url">
+      <div class="modal-body">
+        <form id="formURL">
+          <div class="form-group">
+            <label>URL de téléchargement *</label>
+            <input type="url" name="url" placeholder="https://releases.ubuntu.com/…/ubuntu-24.04.iso" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nom affiché *</label>
+              <input type="text" name="name" placeholder="ex: Ubuntu 24.04 LTS Server" required>
+            </div>
+            <div class="form-group">
+              <label>Catégorie</label>
+              <select name="category">
+                <option value="linux">Linux</option>
+                <option value="windows">Windows</option>
+                <option value="tools">Tools</option>
+                <option value="other" selected>Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row-3">
+            <div class="form-group">
+              <label>OS Family</label>
+              <input type="text" name="os_family" placeholder="ubuntu">
+            </div>
+            <div class="form-group">
+              <label>Version</label>
+              <input type="text" name="version" placeholder="24.04">
+            </div>
+            <div class="form-group">
+              <label>Architecture</label>
+              <select name="architecture">
+                <option value="x86_64" selected>x86_64</option>
+                <option value="arm64">arm64</option>
+                <option value="x86">x86</option>
+                <option value="other">other</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Checksum attendu</label>
+              <input type="text" name="expected_checksum" placeholder="a1b2c3…">
+            </div>
+            <div class="form-group">
+              <label>Type</label>
+              <select name="checksum_type">
+                <option value="sha256" selected>SHA256</option>
+                <option value="sha512">SHA512</option>
+                <option value="md5">MD5</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <textarea name="description" placeholder="Notes libres…"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Tags (virgules)</label>
+            <input type="text" name="tags" placeholder="homelab, ubuntu, lts">
+          </div>
+          <div class="form-footer">
+            <button type="button" class="btn btn-ghost" onclick="closeModal('modalAdd')">Annuler</button>
+            <button type="submit" class="btn btn-primary">
+              <svg width="13" height="13"><use href="#ic-download"/></svg>
+              <span class="btn-label">Télécharger</span>
+              <span class="spinner"></span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Tab Upload -->
+    <div class="tab-panel" id="tab-upload">
+      <div class="modal-body">
+        <form id="formUpload">
+          <div class="drop-zone" id="dropZone">
+            <div class="dz-icon">
+              <svg width="32" height="32"><use href="#ic-upload"/></svg>
+            </div>
+            <div class="dz-text">Glissez votre fichier ici<br>ou cliquez pour sélectionner</div>
+            <div class="dz-hint">ISO · IMG · VMDK · VDI · QCOW2</div>
+            <input type="file" id="fileInput" style="display:none" accept=".iso,.img,.vmdk,.vdi,.qcow2,.raw,.vhd,.vhdx">
+          </div>
+          <div class="file-selected" id="fileSelected">
+            <svg width="14" height="14"><use href="#ic-disc"/></svg>
+            <span id="fileSelectedName" style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></span>
+          </div>
+          <div id="uploadProgressWrap" style="display:none;margin-bottom:10px">
+            <div class="progress-row">
+              <div class="progress-track"><div class="progress-fill" id="uploadProgressBar" style="width:0%"></div></div>
+              <span class="progress-pct" id="uploadProgressPct">0%</span>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nom affiché *</label>
+              <input type="text" id="uploadName" name="name" placeholder="ex: Windows 11 25H2 FR" required>
+            </div>
+            <div class="form-group">
+              <label>Catégorie</label>
+              <select name="category">
+                <option value="linux">Linux</option>
+                <option value="windows">Windows</option>
+                <option value="tools">Tools</option>
+                <option value="other" selected>Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row-3">
+            <div class="form-group">
+              <label>OS Family</label>
+              <input type="text" name="os_family" placeholder="ubuntu">
+            </div>
+            <div class="form-group">
+              <label>Version</label>
+              <input type="text" name="version" placeholder="24.04">
+            </div>
+            <div class="form-group">
+              <label>Architecture</label>
+              <select name="architecture">
+                <option value="x86_64" selected>x86_64</option>
+                <option value="arm64">arm64</option>
+                <option value="x86">x86</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Tags (virgules)</label>
+            <input type="text" name="tags" placeholder="homelab, ubuntu, lts">
+          </div>
+          <div class="form-footer">
+            <button type="button" class="btn btn-ghost" onclick="closeModal('modalAdd')">Annuler</button>
+            <button type="submit" class="btn btn-primary">
+              <svg width="13" height="13"><use href="#ic-upload"/></svg>
+              <span class="btn-label">Uploader</span>
+              <span class="spinner"></span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     MODAL — SCANNER LE STOCKAGE
+══════════════════════════════════════════════════════════ -->
+<div class="modal-overlay hidden" id="modalBrowse">
+  <div class="modal" style="max-width:600px">
+    <div class="modal-head">
+      <h2>Scanner le stockage</h2>
+      <button class="btn-close" onclick="closeModal('modalBrowse')">
+        <svg width="14" height="14"><use href="#ic-x"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="scan-header">
+        <div class="scan-count" id="scanCount" style="display:none">
+          <span><span class="badge-dot" style="background:var(--green);display:inline-block;border-radius:50%;width:6px;height:6px;margin-right:4px"></span><strong id="scanTracked">0</strong> indexés</span>
+          <span><span class="badge-dot" style="background:var(--orange);display:inline-block;border-radius:50%;width:6px;height:6px;margin-right:4px"></span><strong id="scanNew">0</strong> nouveaux</span>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <button class="btn btn-ghost btn-sm" id="btnSelectAllNew" onclick="selectAllNew()" style="display:none">
+            <svg width="13" height="13"><use href="#ic-check-sq"/></svg> Sél. nouveaux
+          </button>
+          <button class="btn btn-ghost btn-sm" id="btnRescan" onclick="runScan()">
+            <svg width="13" height="13"><use href="#ic-refresh"/></svg> Rescanner
+          </button>
+        </div>
+      </div>
+      <div class="scan-list" id="scanList">
+        <div class="scan-loading"><div class="spin-sm"></div> Scan en cours…</div>
+      </div>
+      <div class="scan-selection-bar" id="scanSelBar"></div>
+      <div class="form-footer" style="margin-top:0;padding-top:14px">
+        <button class="btn btn-ghost" onclick="closeModal('modalBrowse')">Fermer</button>
+        <button class="btn btn-primary" id="btnImport" disabled onclick="importSelected()">
+          <svg width="13" height="13"><use href="#ic-import"/></svg>
+          <span class="btn-label">Importer la sélection</span>
+          <span class="spinner"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     MODAL — ÉDITION
+══════════════════════════════════════════════════════════ -->
+<div class="modal-overlay hidden" id="modalEdit">
+  <div class="modal">
+    <div class="modal-head">
+      <h2>Modifier l'ISO</h2>
+      <button class="btn-close" onclick="closeModal('modalEdit')">
+        <svg width="14" height="14"><use href="#ic-x"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form id="formEdit">
+        <div class="form-group">
+          <label>Nom affiché</label>
+          <input type="text" name="editName" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Catégorie</label>
+            <select name="editCategory">
+              <option value="linux">Linux</option>
+              <option value="windows">Windows</option>
+              <option value="tools">Tools</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Architecture</label>
+            <select name="editArchitecture">
+              <option value="x86_64">x86_64</option>
+              <option value="arm64">arm64</option>
+              <option value="x86">x86</option>
+              <option value="other">other</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>OS Family</label>
+            <input type="text" name="editOsFamily" placeholder="ubuntu">
+          </div>
+          <div class="form-group">
+            <label>Version</label>
+            <input type="text" name="editVersion" placeholder="24.04">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Édition</label>
+            <select name="editEdition">
+              <option value="">— Non spécifiée —</option>
+              <option value="desktop">Desktop</option>
+              <option value="server">Server</option>
+              <option value="cli">CLI / Minimal</option>
+              <option value="live">Live</option>
+              <option value="core">Core</option>
+              <option value="workstation">Workstation</option>
+              <option value="netinstall">Net Install</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Format</label>
+            <select name="editFileFormat">
+              <option value="">Auto</option>
+              <option value="iso">ISO</option>
+              <option value="img">IMG</option>
+              <option value="vmdk">VMDK</option>
+              <option value="qcow2">QCOW2</option>
+              <option value="vdi">VDI</option>
+              <option value="raw">RAW</option>
+              <option value="vhd">VHD</option>
+              <option value="vhdx">VHDX</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea name="editDescription"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Tags (virgules)</label>
+          <input type="text" name="editTags">
+        </div>
+        <div class="form-row">
+          <div class="form-group" style="flex:1">
+            <label>SHA256 attendu <span class="label-hint">(pour vérification)</span></label>
+            <input type="text" name="editExpectedChecksum" placeholder="Coller le hash officiel…" style="font-family:monospace;font-size:11px">
+          </div>
+          <div class="form-group" style="flex:0 0 100px">
+            <label>Type</label>
+            <select name="editChecksumType">
+              <option value="sha256">SHA256</option>
+              <option value="sha512">SHA512</option>
+              <option value="md5">MD5</option>
+            </select>
+          </div>
+        </div>
+        <div id="editHashInfo" class="hash-info">
+          <div class="hash-info-header">Informations techniques</div>
+          <div class="hash-info-body">
+            <div class="hash-row" id="editHashNoHash">
+              <span class="hash-hint">Aucun hash calculé — cliquez sur <strong>Hash</strong> dans la carte pour lancer le calcul SHA256 (facultatif).</span>
+            </div>
+            <div class="hash-row hash-row-data hidden" id="editHashSHA256Row">
+              <span class="hash-label">SHA256</span>
+              <span class="hash-value" id="editHashSHA256">—</span>
+              <button type="button" class="hash-copy-btn" onclick="copyHashValue('editHashSHA256')" title="Copier">
+                <svg width="12" height="12"><use href="#ic-copy"/></svg>
+              </button>
+            </div>
+            <div class="hash-row hash-row-data hidden" id="editHashStatusRow">
+              <span class="hash-label">Statut</span>
+              <span class="hash-status" id="editHashStatus">—</span>
+            </div>
+            <div class="hash-row hash-row-data hidden" id="editHashSizeRow">
+              <span class="hash-label">Taille</span>
+              <span id="editHashSize">—</span>
+            </div>
+            <div class="hash-row hash-row-data hidden" id="editHashSourceRow">
+              <span class="hash-label">Source</span>
+              <span class="hash-value hash-truncate" id="editHashSource">—</span>
+            </div>
+          </div>
+        </div>
+        <div class="form-footer">
+          <button type="button" class="btn btn-ghost" onclick="closeModal('modalEdit')">Annuler</button>
+          <button type="submit" class="btn btn-primary">
+            <svg width="13" height="13"><use href="#ic-check"/></svg>
+            <span class="btn-label">Enregistrer</span>
+            <span class="spinner"></span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     MODAL — CONFIRMATION SUPPRESSION
+══════════════════════════════════════════════════════════ -->
+<div class="modal-overlay hidden" id="modalConfirm">
+  <div class="modal" style="max-width:380px">
+    <div class="modal-head">
+      <h2>Confirmer la suppression</h2>
+      <button class="btn-close" onclick="closeModal('modalConfirm')">
+        <svg width="14" height="14"><use href="#ic-x"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p class="confirm-msg" id="confirmMsg" style="padding:0"></p>
+      <div class="form-footer" style="margin-top:0">
+        <button class="btn btn-ghost" onclick="closeModal('modalConfirm')">Annuler</button>
+        <button class="btn btn-primary" style="background:var(--red)" onclick="executeDelete()">
+          <svg width="13" height="13"><use href="#ic-trash"/></svg>
+          <span class="btn-label">Supprimer</span>
+          <span class="spinner"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── DRAWER APERÇU ── -->
+<div id="drawerOverlay" class="drawer-overlay hidden" onclick="closeDrawer()"></div>
+<div id="drawer" class="drawer hidden">
+  <div class="drawer-head">
+    <div class="drawer-title" id="drawerTitle">—</div>
+    <button class="btn-close" onclick="closeDrawer()"><svg width="14" height="14"><use href="#ic-x"/></svg></button>
+  </div>
+  <div class="drawer-body" id="drawerBody"></div>
+</div>
+
+<!-- ── MODAL STATS ── -->
+<div class="modal-overlay hidden" id="modalStats">
+  <div class="modal" style="max-width:700px;width:95%">
+    <div class="modal-head">
+      <h2>
+        <svg width="16" height="16" style="vertical-align:-2px;margin-right:6px"><use href="#ic-bar-chart"/></svg>
+        Statistiques de la bibliothèque
+      </h2>
+      <button class="btn-close" onclick="closeModal('modalStats')">
+        <svg width="14" height="14"><use href="#ic-x"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" id="statsModalBody" style="padding:24px">
+      <div style="display:flex;align-items:center;justify-content:center;padding:40px">
+        <div class="spin-sm"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     MODAL — MAINTENANCE SQL
+══════════════════════════════════════════════════════════ -->
+<div class="modal-overlay hidden" id="modalMaintenance">
+  <div class="modal" style="max-width:580px;width:95%">
+    <div class="modal-head">
+      <h2>
+        <svg width="16" height="16" style="vertical-align:-2px;margin-right:6px"><use href="#ic-tool"/></svg>
+        Maintenance SQL
+      </h2>
+      <button class="btn-close" onclick="closeModal('modalMaintenance')">
+        <svg width="14" height="14"><use href="#ic-x"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" style="padding:20px 24px 24px">
+
+      <!-- Infos système -->
+      <div class="maint-sysinfo" id="maintSysInfo">
+        <div class="maint-info-row">
+          <span class="maint-info-label">
+            <svg width="12" height="12"><use href="#ic-folder"/></svg> Stockage ISO
+          </span>
+          <code class="maint-info-val" id="maintStoragePath">…</code>
+        </div>
+        <div class="maint-info-row">
+          <span class="maint-info-label">
+            <svg width="12" height="12"><use href="#ic-server"/></svg> Base de données
+          </span>
+          <code class="maint-info-val" id="maintDbPath">…</code>
+        </div>
+        <div class="maint-info-row">
+          <span class="maint-info-label">
+            <svg width="12" height="12"><use href="#ic-disc"/></svg> Taille DB
+          </span>
+          <span id="maintDbSize">…</span>
+        </div>
+        <div class="maint-info-row" id="maintDiskRow">
+          <span class="maint-info-label">
+            <svg width="12" height="12"><use href="#ic-bar-chart"/></svg> Disque
+          </span>
+          <div class="maint-disk-bar-wrap">
+            <div class="maint-disk-bar">
+              <div class="maint-disk-fill" id="maintDiskFill" style="width:0%"></div>
+            </div>
+            <span class="maint-disk-label" id="maintDiskLabel">…</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="maint-actions">
+        <div class="maint-action-card" id="cardIntegrity">
+          <div class="maint-action-info">
+            <div class="maint-action-title">
+              <svg width="13" height="13"><use href="#ic-shield"/></svg>
+              Vérifier l'intégrité
+            </div>
+            <div class="maint-action-desc">Exécute <code>PRAGMA integrity_check</code> sur la base SQLite.</div>
+          </div>
+          <button class="btn btn-secondary btn-sm" onclick="maintIntegrity()">
+            <span class="btn-label">Vérifier</span>
+            <span class="spinner"></span>
+          </button>
+        </div>
+
+        <div class="maint-action-card" id="cardVacuum">
+          <div class="maint-action-info">
+            <div class="maint-action-title">
+              <svg width="13" height="13"><use href="#ic-refresh"/></svg>
+              VACUUM
+            </div>
+            <div class="maint-action-desc">Compacte la base de données et libère l'espace inutilisé.</div>
+          </div>
+          <button class="btn btn-secondary btn-sm" onclick="maintVacuum()">
+            <span class="btn-label">Exécuter</span>
+            <span class="spinner"></span>
+          </button>
+        </div>
+
+        <div class="maint-action-card" id="cardReindex">
+          <div class="maint-action-info">
+            <div class="maint-action-title">
+              <svg width="13" height="13"><use href="#ic-layers"/></svg>
+              Réindexer
+            </div>
+            <div class="maint-action-desc">Reconstruit tous les index de la base de données.</div>
+          </div>
+          <button class="btn btn-secondary btn-sm" onclick="maintReindex()">
+            <span class="btn-label">Réindexer</span>
+            <span class="spinner"></span>
+          </button>
+        </div>
+
+        <div class="maint-action-card" id="cardOrphans">
+          <div class="maint-action-info">
+            <div class="maint-action-title">
+              <svg width="13" height="13"><use href="#ic-x-sq"/></svg>
+              Nettoyer les orphelins
+            </div>
+            <div class="maint-action-desc">Supprime les entrées DB dont le fichier ISO est absent du disque.</div>
+          </div>
+          <button class="btn btn-secondary btn-sm" style="border-color:var(--red);color:var(--red)" onclick="maintCleanOrphans()">
+            <span class="btn-label">Nettoyer</span>
+            <span class="spinner"></span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Log résultats -->
+      <div class="maint-log" id="maintLog"></div>
+
+      <div class="form-footer" style="margin-top:0;padding-top:14px">
+        <button class="btn btn-ghost" onclick="closeModal('modalMaintenance')">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── DROP ZONE PAGE PRINCIPALE ── -->
+<div id="pageDropOverlay" class="page-drop-overlay hidden">
+  <div class="page-drop-inner">
+    <svg width="48" height="48" style="color:var(--orange)"><use href="#ic-disc"/></svg>
+    <p>Déposer l'ISO ici pour l'ajouter</p>
+  </div>
+</div>
+
+{% endblock %}
+{% block scripts %}<script src="/static/js/app.js?v={{ js_ver }}"></script>{% endblock %}
